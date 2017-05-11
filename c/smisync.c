@@ -31,16 +31,10 @@ int main(int argc, char *argv[])
 
 	while(fgets(buf, BUFLEN, stdin) != NULL) {
 		if(strncasecmp(buf, SYNCSTR, strlen(SYNCSTR)) == 0) {
-			printf("%s", SYNCSTR);
-
 			tptr = buf + strlen(SYNCSTR);
 			sync = strtol(tptr, &eptr, 10);
-			if(sync >= start)
-				printf("%d", sync+range);
-			else
-				printf("%d", sync);
-
-			printf("%s", eptr);
+			printf("%s%d%s", SYNCSTR, sync + (sync >= start)? range: 0,
+					eptr);
 		}
 		else
 			printf("%s", buf);
