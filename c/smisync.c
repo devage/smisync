@@ -12,20 +12,25 @@ void usage(char *cmd)
   return;
 }
 
+int parse_option(char *optstr, int *start, int *range)
+{
+  char *rangestr;
+  *start = strtol(optstr, &rangestr, 10);
+  *range = strtol(rangestr, NULL, 10);
+  return 0;
+}
+
 int main(int argc, char *argv[])
 {
   int start, range, sync;
-  char *sptr, *rptr, *eptr;
-  char *tptr;
+  char *eptr, *tptr;
 
   if(argc < 2) {
     usage(argv[0]);
     exit(0);
   }
 
-  sptr = argv[1];
-  start = strtol(sptr, &rptr, 10);
-  range = strtol(rptr, &eptr, 10);
+  parse_option(argv[1], &start, &range);
 
   memset(buf, 0, BUFLEN);
 
@@ -33,7 +38,7 @@ int main(int argc, char *argv[])
     if(strncasecmp(buf, SYNCSTR, strlen(SYNCSTR)) == 0) {
       tptr = buf + strlen(SYNCSTR);
       sync = strtol(tptr, &eptr, 10);
-      printf("%s%d%s", SYNCSTR, sync + (sync >= start)? range: 0,
+      printf("%s%d%s", SYNCSTR, sync + ((sync >= start)? range: 0),
           eptr);
     }
     else
