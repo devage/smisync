@@ -1,0 +1,31 @@
+<SAMI>
+<HEAD>
+<TITLE>SMI file for smisync test</TITLE>
+<STYLE TYPE="text/css">
+<!--
+P { margin-left:8pt; margin-right:8pt; margin-bottom:2pt;
+    margin-top:2pt; font-size:20pt; text-align:center;
+    font-family:arial, sans-serif; font-weight:normal; color:white;
+    }
+.KRCC { Name:Korean; lang:en-KR; SAMIType:CC; }
+-->
+</STYLE>
+</HEAD>
+<BODY>
+<SYNC Start=100><P Class=KRCC>
+100ms
+<SYNC Start=200><P Class=KRCC>
+200ms
+<SYNC Start=300><P Class=KRCC>
+300ms
+<SYNC Start=1000><P Class=KRCC>
+1s
+<SYNC Start=2000><P Class=KRCC>&nbsp;
+<SYNC Start=3000><P Class=KRCC>
+3s
+<SYNC Start=4000><P Class=KRCC>&nbsp;
+<SYNC Start=5000><P Class=KRCC>
+5s
+<SYNC Start=6000><P Class=KRCC>&nbsp;
+</BODY>
+</SAMI>
