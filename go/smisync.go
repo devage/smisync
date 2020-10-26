@@ -28,7 +28,7 @@ func smiSync(line string, start int, offset int) string {
 	const syncstr string = "<SYNC Start="
 	syncedLine := line
 
-	if len(syncstr) <= len(line) && syncstr == line[0:len(syncstr)] {
+	if len(syncstr) <= len(line) && strings.EqualFold(syncstr, line[0:len(syncstr)]) {
 		tidx := len(syncstr)
 		eidx := strings.Index(line, ">")
 		sync, _ := strconv.Atoi(line[tidx:eidx])
@@ -36,7 +36,7 @@ func smiSync(line string, start int, offset int) string {
 			sync = sync + offset
 		}
 
-		syncedLine = fmt.Sprintf("%s%d%s", syncstr, sync, line[eidx:])
+		syncedLine = fmt.Sprintf("%s%d%s", line[0:len(syncstr)], sync, line[eidx:])
 	}
 
 	return syncedLine
