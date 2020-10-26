@@ -16,13 +16,10 @@ func usage(cmd string) {
 }
 
 func parseOption(option string) (int, int) {
-
 	pos := strings.IndexAny(option, "+-")
 	start, _ := strconv.Atoi(option[0:pos])
 	offset, _ := strconv.Atoi(option[pos:])
-	if option[pos] == '-' {
-		offset *= -1
-	}
+
 	return start, offset
 }
 
