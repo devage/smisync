@@ -26,6 +26,25 @@ func parseOption(option string) (int, int) {
 	return start, offset
 }
 
+func smiSync(line string, start int, offset int) string {
+
+	const syncstr string = "<SYNC Start="
+	syncedLine := line
+
+	if len(syncstr) <= len(line) && syncstr == line[0:len(syncstr)] {
+		tidx := len(syncstr)
+		eidx := strings.Index(line, ">")
+		sync, _ := strconv.Atoi(line[tidx:eidx])
+		if sync >= start {
+			sync = sync + offset
+		}
+
+		syncedLine = fmt.Sprintf("%s%d%s", syncstr, sync, line[eidx:])
+	}
+
+	return syncedLine
+}
+
 func main() {
 
 	if len(os.Args) < 2 {
@@ -33,7 +52,6 @@ func main() {
 		os.Exit(0)
 	}
 
-	const syncstr string = "<SYNC Start="
 	var buf bytes.Buffer
 
 	start, offset := parseOption(os.Args[1])
@@ -46,17 +64,7 @@ func main() {
 			break
 		}
 
-		if len(syncstr) <= len(line) && syncstr == line[0:len(syncstr)] {
-			tidx := len(syncstr)
-			eidx := strings.Index(line, ">")
-			sync, _ := strconv.Atoi(line[tidx:eidx])
-			if sync >= start {
-				sync = sync + offset
-			}
-
-			fmt.Printf("%s%d%s", syncstr, sync, line[eidx:])
-		} else {
-			fmt.Printf("%s", line)
-		}
+		syncedLine := smiSync(line, start, offset)
+		fmt.Printf("%s", syncedLine)
 	}
 }
